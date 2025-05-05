@@ -23,6 +23,7 @@ class CharactersViewModel extends StateNotifier<CharactersState> {
       AddCharactersByPageUseCaseParams(
         page: state.nextPage ?? 1,
         characters: state.characters,
+        isLastPage: state.isLastPage,
       ),
     );
     result.fold(
@@ -31,13 +32,13 @@ class CharactersViewModel extends StateNotifier<CharactersState> {
             status: FetchStatus.error,
             errorMessage: error.message,
           ),
-
       (success) =>
           state = state.copyWith(
             status: FetchStatus.success,
-            nextPage: success.next,
-            totalResults: success.results?.length,
-            characters: success.results,
+            nextPage: success.result.next,
+            totalResults: success.result.results?.length,
+            characters: success.result.results ?? [],
+            isLastPage: success.isLastPage,
           ),
     );
   }

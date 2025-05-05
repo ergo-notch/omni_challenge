@@ -7,6 +7,7 @@ class CharactersState {
   final num? nextPage;
   final num? totalResults;
   final List<CharacterEntity> characters;
+  final bool isLastPage;
 
   const CharactersState({
     this.status = FetchStatus.initial,
@@ -14,6 +15,7 @@ class CharactersState {
     this.nextPage,
     this.totalResults,
     this.characters = const [],
+    this.isLastPage = false,
   });
 
   CharactersState copyWith({
@@ -22,6 +24,7 @@ class CharactersState {
     num? nextPage,
     num? totalResults,
     List<CharacterEntity>? characters,
+    bool? isLastPage,
   }) {
     return CharactersState(
       status: status ?? this.status,
@@ -29,6 +32,7 @@ class CharactersState {
       nextPage: nextPage ?? this.nextPage,
       totalResults: totalResults ?? this.totalResults,
       characters: characters ?? this.characters,
+      isLastPage: isLastPage ?? this.isLastPage,
     );
   }
 }

@@ -5,35 +5,70 @@ final addCharactersByPageUseCaseProvider = Provider<AddCharactersByPageUseCase>(
 );
 
 class AddCharactersByPageUseCase
-    extends UseCase<CharactersListEntity, AddCharactersByPageUseCaseParams> {
+    extends
+        UseCase<
+          AddCharactersByPageUseCaseResult,
+          AddCharactersByPageUseCaseParams
+        > {
   final IRepository repository;
 
   AddCharactersByPageUseCase({required this.repository});
 
   @override
-  Future<Either<GraphQLErrorException, CharactersListEntity>> call(
+  Future<Either<GraphQLErrorException, AddCharactersByPageUseCaseResult>> call(
     AddCharactersByPageUseCaseParams params,
   ) async {
-    final response = await repository.getCharacters(page: params.page);
-    return response.fold((error) => Left(error), (success) {
-      List<CharacterEntity> results = [
-        ...params.characters,
-        ...success.results ?? [],
-      ];
+    if (params.isLastPage) {
       return Right(
-        CharactersListEntity(
-          count: results.length,
-          results: results,
-          next: success.next,
+        AddCharactersByPageUseCaseResult(
+          isLastPage: params.isLastPage,
+          result: CharactersListEntity(
+            count: params.characters.length,
+            results: params.characters,
+            next: null,
+          ),
         ),
       );
-    });
+    } else {
+      final response = await repository.getCharacters(page: params.page);
+      return response.fold((error) => Left(error), (success) {
+        List<CharacterEntity> results = [
+          ...params.characters,
+          ...success.results ?? [],
+        ];
+        return Right(
+          AddCharactersByPageUseCaseResult(
+            isLastPage: results.length >= (success.count ?? 0),
+            result: CharactersListEntity(
+              count: success.count,
+              results: results,
+              next: success.next,
+            ),
+          ),
+        );
+      });
+    }
   }
 }
 
 class AddCharactersByPageUseCaseParams {
   final num page;
   final List<CharacterEntity> characters;
+  final bool isLastPage;
 
-  AddCharactersByPageUseCaseParams({this.page = 1, this.characters = const []});
+  AddCharactersByPageUseCaseParams({
+    this.page = 1,
+    this.characters = const [],
+    this.isLastPage = false,
+  });
+}
+
+class AddCharactersByPageUseCaseResult {
+  final bool isLastPage;
+  final CharactersListEntity result;
+
+  AddCharactersByPageUseCaseResult({
+    this.isLastPage = false,
+    required this.result,
+  });
 }
