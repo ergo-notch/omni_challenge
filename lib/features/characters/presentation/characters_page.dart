@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:omni_challenge/features/characters/presentation/providers/characters_state.dart';
 import 'package:omni_challenge/features/characters/presentation/widgets/character_tile.dart';
 
@@ -76,7 +77,7 @@ class CharactersPageState extends ConsumerState<CharactersPage> {
                     final character = state.characters[index];
                     return CharacterTile(
                       onSelectCharacter: (character) {
-                        // Handle character selection
+                        context.go('/characters/character/${character?.id}');
                       },
                       character:
                           character, // Replace with actual character data

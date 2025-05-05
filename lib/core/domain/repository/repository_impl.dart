@@ -16,4 +16,18 @@ class RepositoryImpl extends IRepository {
       return Left(e);
     }
   }
+
+  @override
+  Future<Either<GraphQLErrorException, DetailsEntity>> getCharacterDetails({
+    String? characterId,
+  }) async {
+    try {
+      final result = await dataSource.getCharacterDetails(
+        characterId: characterId,
+      );
+      return Right(DetailsEntity.fromModel(result));
+    } on GraphQLErrorException catch (e) {
+      return Left(e);
+    }
+  }
 }

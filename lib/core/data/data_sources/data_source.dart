@@ -1,3 +1,5 @@
+import 'package:omni_challenge/features/details/data/models/details_model.dart';
+
 import '../../core.dart';
 
 final dataSourceProvider = Provider<IDataSource>(
@@ -6,6 +8,7 @@ final dataSourceProvider = Provider<IDataSource>(
 
 abstract class IDataSource {
   Future<CharactersListModel> getCharacters({num page = 1});
+  Future<DetailsModel> getCharacterDetails({String? characterId});
 }
 
 class DataSourceImpl implements IDataSource {
@@ -39,6 +42,41 @@ class DataSourceImpl implements IDataSource {
       rethrow;
     } catch (e) {
       throw GraphQLErrorException(message: 'Error fetching characters: $e');
+    }
+  }
+
+  @override
+  Future<DetailsModel> getCharacterDetails({String? characterId}) async {
+    try {
+      final result = await client.query('''
+                    query {
+                      character(id: $characterId) {
+                            id
+                            name
+                            status
+                            species
+                            type
+                            origin{
+                                  name
+                            }
+                            location{
+                                  name
+                            }
+                            image
+                            episode{
+                                  episode
+                                  name
+                            }
+                      }
+                      }''');
+
+      return DetailsModel.fromJson(result);
+    } on GraphQLErrorException catch (_) {
+      rethrow;
+    } catch (e) {
+      throw GraphQLErrorException(
+        message: 'Error fetching character details: $e',
+      );
     }
   }
 }
