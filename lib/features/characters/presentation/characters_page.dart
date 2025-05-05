@@ -74,39 +74,9 @@ class CharactersPageState extends ConsumerState<CharactersPage> {
                 ),
                 state.status == FetchStatus.error
                     ? SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 200,
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'No results found',
-                              style: TextStyle(
-                                color: Colors.deepPurple,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            TextButton.icon(
-                              onPressed: () => _fetchCharacters(),
-                              label: const Text(
-                                'Retry',
-                                style: TextStyle(
-                                  color: Colors.deepPurple,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.refresh,
-                                size: 35,
-                                color: Colors.deepPurple,
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: RetryWidget(
+                        errorMessage: 'No results found',
+                        onRetry: () => _fetchCharacters(),
                       ),
                     )
                     : SliverGrid(

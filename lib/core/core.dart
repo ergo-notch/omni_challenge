@@ -12,3 +12,4 @@ export 'providers/client_provider.dart';
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:omni_challenge/features/details/details.dart';
 export 'domain/repository/repository_impl.dart';
+export 'ui/retry_widget.dart';
