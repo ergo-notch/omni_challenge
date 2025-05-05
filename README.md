@@ -3,6 +3,9 @@
 Omni Challenge is a Flutter application built using the **MVVM architecture** with **Riverpod** for state management, **go_router** for navigation, and following **Clean Architecture** and **SOLID** principles.  
 It supports dynamic environment configuration using `--dart-define-from-file`.
 
+https://github.com/user-attachments/assets/1831d1ae-5d30-490c-a74d-7e04e96e841f
+
+
 📦 **Repository:**  
 [https://github.com/ergo-notch/omni_challenge](https://github.com/ergo-notch/omni_challenge)
 
@@ -109,8 +112,11 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots![Simulator Screenshot - iPhone 16 - 2025-05-05 at 11 47 08](https://github.com/user-attachments/assets/dfb2afa0-7490-4f97-b92d-325e62bf127f)
+![Simulator Screenshot - iPhone 16 - 2025-05-05 at 11 47 16](https://github.com/user-attachments/assets/3afa880b-cb81-4be3-a090-c55e8009ff21)
+![Simulator Screenshot - iPhone 16 - 2025-05-05 at 11 47 25](https://github.com/user-attachments/assets/f86f1077-aa10-49ce-a07f-fae396c352a1)
 
-_Add screenshots here if available._
+
+
 
 ---
