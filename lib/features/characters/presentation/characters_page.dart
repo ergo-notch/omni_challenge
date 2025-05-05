@@ -72,24 +72,64 @@ class CharactersPageState extends ConsumerState<CharactersPage> {
                     ),
                   ),
                 ),
-                SliverGrid(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final character = state.characters[index];
-                    return CharacterTile(
-                      onSelectCharacter: (character) {
-                        context.go('/characters/character/${character?.id}');
-                      },
-                      character:
-                          character, // Replace with actual character data
-                    );
-                  }, childCount: state.characters.length),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 4 / 5,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 2,
-                  ),
-                ),
+                state.status == FetchStatus.error
+                    ? SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'No results found',
+                              style: TextStyle(
+                                color: Colors.deepPurple,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            TextButton.icon(
+                              onPressed: () => _fetchCharacters(),
+                              label: const Text(
+                                'Retry',
+                                style: TextStyle(
+                                  color: Colors.deepPurple,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.refresh,
+                                size: 35,
+                                color: Colors.deepPurple,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                    : SliverGrid(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final character = state.characters[index];
+                        return CharacterTile(
+                          onSelectCharacter: (character) {
+                            context.go(
+                              '/characters/character/${character?.id}',
+                            );
+                          },
+                          character:
+                              character, // Replace with actual character data
+                        );
+                      }, childCount: state.characters.length),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 4 / 5,
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 2,
+                          ),
+                    ),
               ],
             ),
           ],
