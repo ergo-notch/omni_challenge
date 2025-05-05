@@ -8,7 +8,10 @@
             "name": "Run debug",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart"
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define-from-file=config.json"
+            ],
         }
     ]
 }

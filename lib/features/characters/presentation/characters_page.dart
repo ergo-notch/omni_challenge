@@ -60,47 +60,54 @@ class CharactersPageState extends ConsumerState<CharactersPage> {
         onRefresh: () => _fetchCharacters(),
         child: Stack(
           children: [
-            CustomScrollView(
+            Scrollbar(
               controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  expandedHeight: 150,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Image.asset(
-                      AppImages.splashScreen,
-                      fit: BoxFit.cover,
+              thickness: 8,
+              radius: const Radius.circular(10),
+
+              thumbVisibility: false,
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverAppBar(
+                    expandedHeight: 150,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Image.asset(
+                        AppImages.splashScreen,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                state.status == FetchStatus.error
-                    ? SliverToBoxAdapter(
-                      child: RetryWidget(
-                        errorMessage: 'No results found',
-                        onRetry: () => _fetchCharacters(),
+                  state.status == FetchStatus.error
+                      ? SliverToBoxAdapter(
+                        child: RetryWidget(
+                          errorMessage: 'No results found',
+                          onRetry: () => _fetchCharacters(),
+                        ),
+                      )
+                      : SliverGrid(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final character = state.characters[index];
+                          return CharacterTile(
+                            onSelectCharacter: (character) {
+                              context.go(
+                                '/characters/character/${character?.id}',
+                              );
+                            },
+                            character:
+                                character, // Replace with actual character data
+                          );
+                        }, childCount: state.characters.length),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 4 / 5,
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 2,
+                            ),
                       ),
-                    )
-                    : SliverGrid(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        final character = state.characters[index];
-                        return CharacterTile(
-                          onSelectCharacter: (character) {
-                            context.go(
-                              '/characters/character/${character?.id}',
-                            );
-                          },
-                          character:
-                              character, // Replace with actual character data
-                        );
-                      }, childCount: state.characters.length),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 4 / 5,
-                            mainAxisSpacing: 0,
-                            crossAxisSpacing: 2,
-                          ),
-                    ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

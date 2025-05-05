@@ -1,10 +1,13 @@
 import 'package:omni_challenge/core/core.dart';
 
-final graphqlProvider = Provider<GraphQLService>(
-  (ref) => GraphQLServiceImpl(
-    baseUrl: String.fromEnvironment(
-      'BASE_URL',
-      defaultValue: 'https://rickandmortyapi.com/graphql',
-    ),
-  ),
-);
+final graphqlClientProvider = Provider<GraphQLClient>((ref) {
+  return GraphQLClient(
+    link: HttpLink(Environment.baseUrl),
+    cache: GraphQLCache(),
+  );
+});
+
+final graphqlProvider = Provider<GraphQLService>((ref) {
+  final client = ref.read(graphqlClientProvider);
+  return GraphQLServiceImpl(client: client);
+});

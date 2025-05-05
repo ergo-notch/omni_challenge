@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:omni_challenge/core/core.dart';
-import 'package:omni_challenge/core/router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp.router(
-        title: 'Flutter Demo',
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.lightGreenAccent,
           appBarTheme: AppBarTheme(color: Colors.deepPurple),

@@ -17,8 +17,7 @@ abstract class GraphQLService {
 class GraphQLServiceImpl implements GraphQLService {
   final GraphQLClient client;
 
-  GraphQLServiceImpl({required String baseUrl})
-    : client = GraphQLClient(cache: GraphQLCache(), link: HttpLink(baseUrl));
+  GraphQLServiceImpl({required this.client});
 
   @override
   Future<Map<String, dynamic>> query(
