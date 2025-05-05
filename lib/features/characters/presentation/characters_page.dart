@@ -39,8 +39,12 @@ class CharactersPageState extends ConsumerState<CharactersPage> {
     }
   }
 
-  Future<void> _fetchCharacters() async {
+  void _fetchCharacters() {
     ref.read(charactersViewModelProvider.notifier).fetchCharacters();
+  }
+
+  Future<void> _refreshCharacters() async {
+    ref.read(charactersViewModelProvider.notifier).refreshCharacters();
   }
 
   @override
@@ -57,7 +61,7 @@ class CharactersPageState extends ConsumerState<CharactersPage> {
     return Scaffold(
       body: RefreshIndicator(
         key: _refreshKey,
-        onRefresh: () => _fetchCharacters(),
+        onRefresh: () => _refreshCharacters(),
         child: Stack(
           children: [
             Scrollbar(

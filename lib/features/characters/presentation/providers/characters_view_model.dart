@@ -17,6 +17,32 @@ class CharactersViewModel extends StateNotifier<CharactersState> {
   CharactersViewModel({required this.getCharactersByPageUseCase})
     : super(const CharactersState());
 
+  Future<void> refreshCharacters() async {
+    state = state.copyWith(status: FetchStatus.fetching);
+    final result = await getCharactersByPageUseCase.call(
+      AddCharactersByPageUseCaseParams(
+        page: 1,
+        characters: [],
+        isLastPage: false,
+      ),
+    );
+    result.fold(
+      (error) =>
+          state = state.copyWith(
+            status: FetchStatus.error,
+            errorMessage: error.message,
+          ),
+      (success) =>
+          state = state.copyWith(
+            status: FetchStatus.success,
+            nextPage: success.result.next,
+            totalResults: success.result.results?.length,
+            characters: success.result.results ?? [],
+            isLastPage: success.isLastPage,
+          ),
+    );
+  }
+
   Future<void> fetchCharacters() async {
     state = state.copyWith(status: FetchStatus.fetching);
     final result = await getCharactersByPageUseCase.call(
