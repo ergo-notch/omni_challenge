@@ -38,7 +38,7 @@ class CharacterDetailsPageState extends ConsumerState<CharacterDetailsPage> {
       children: [
         Scaffold(
           appBar: AppBar(
-            toolbarHeight: 90,
+            toolbarHeight: 100,
             centerTitle: true,
             leading: InkWell(
               onTap: () => Navigator.pop(context),
@@ -49,12 +49,14 @@ class CharacterDetailsPageState extends ConsumerState<CharacterDetailsPage> {
               ),
             ),
             title: Text(
+              maxLines: 2,
               state.status == FetchStatus.success
                   ? state.details?.name ?? ''
                   : 'Loading...',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.yellowAccent,
-                fontSize: 28,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
