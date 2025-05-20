@@ -1,5 +1,4 @@
 import 'package:omni_challenge/core/core.dart';
-import 'package:omni_challenge/core/utils/fetch_status.dart';
 
 class CharactersState {
   final FetchStatus status;

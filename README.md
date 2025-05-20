@@ -25,6 +25,7 @@ https://github.com/user-attachments/assets/1831d1ae-5d30-490c-a74d-7e04e96e841f
 ### Prerequisites
 
 - [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- Built with Flutter v3.29.3 & Dart SDK version: 3.7.2
 - A physical device or emulator (Android or iOS)
 
 ---

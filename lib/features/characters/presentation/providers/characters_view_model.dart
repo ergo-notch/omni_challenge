@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 final charactersViewModelProvider =
     StateNotifierProvider<CharactersViewModel, CharactersState>(
       (ref) => CharactersViewModel(
-        getCharactersByPageUseCase: ref.watch(
+        getCharactersByPageUseCase: ref.read(
           addCharactersByPageUseCaseProvider,
         ),
       ),
